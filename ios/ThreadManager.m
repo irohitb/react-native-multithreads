@@ -9,6 +9,7 @@
 
 @synthesize bridge = _bridge;
 
+
 RCT_EXPORT_MODULE(ThreadManager);
 
 RCT_EXPORT_METHOD(startThread: (NSString *)path
@@ -29,7 +30,10 @@ RCT_EXPORT_METHOD(getExistingThread:
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-
+    RCTBridge* parentBridge =  [RNThreadsBridge sharedInstance].getReactBridge;
+    if (parentBridge == nil) {
+        [[RNThreadsBridge sharedInstance] setReactBridge:self.bridge];
+    }
     if ([[RNThreadHandler sharedInstance] doesThreadWithIdExist:threadId] == true) {
         resolve(threadId);
     } else {
