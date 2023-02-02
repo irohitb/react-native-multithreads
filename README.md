@@ -11,7 +11,7 @@ resources before using this library! Alternative solutions include using `runAft
 or the [Interaction Manager](https://facebook.github.io/react-native/docs/interactionmanager.html),
 and I recommend you investigate those thoroughly before using this library.
 
-**Note:** This is an updated folk of [react-native-threads](https://github.com/joltup/react-native-threads)
+**Note:** This is an updated fork of [react-native-threads](https://github.com/joltup/react-native-threads)
 
 ## Getting Started
 
