@@ -1,8 +1,18 @@
 # react-native-threads
 
-Spawn new react native JavaScript processes for CPU intensive work outside of your main UI JavaScript process.
+## Update
 
-**PS:** Supports Preloading in iOS with support for turbo module in progress.
+Updated fork of [react-native-threads](https://github.com/joltup/react-native-threads) which adds new api's like
+
+- Preloading thread on native side (in background thread for faster performance and early optimization)
+- New API to get reference of existing thread
+- Typescript support
+
+## Fixes
+
+- Fixes serveral depreciated API's on Andriod and iOS
+
+## About
 
 Despite this package's name, this isn't real 'threading', but rather multi-processing.
 The main tradeoff of using this library is memory usage, as creating new JS processes
