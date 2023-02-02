@@ -75,9 +75,9 @@ module.exports = {
 
 ## Usage
 
-[Example repo](https://github.com/irohitb/rn-pre-threading)
-[background preload thread in iOS](https://github.com/irohitb/rn-pre-threading/commit/1838ae35c8a2b8796a12fcf42bcf96942de7d050)
-[JS Code example](https://github.com/irohitb/rn-pre-threading/blob/master/App.tsx)
+- [Example repo](https://github.com/irohitb/rn-pre-threading)
+- [background preload thread in iOS](https://github.com/irohitb/rn-pre-threading/commit/1838ae35c8a2b8796a12fcf42bcf96942de7d050)
+- [JS Code example](https://github.com/irohitb/rn-pre-threading/blob/master/App.tsx)
 
 ### Preloading (iOS only)
 
