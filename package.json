@@ -1,0 +1,32 @@
+{
+  "name": "react-native-multithreads",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/irohitb/react-native-multithreads"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "thread",
+    "workers",
+    "parallelism",
+    "concurrency",
+    "processing"
+  ],
+  "author": "Rohit Bhatia",
+  "license": "MIT",
+  "files": [
+    "android/",
+    "ios/",
+    "js/",
+    "index.js"
+  ],
+  "peerDependencies": {
+    "react-native": ">=0.50.0"
+  }
+}
