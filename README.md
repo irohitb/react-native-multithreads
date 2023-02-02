@@ -123,6 +123,8 @@ thread.onMessage = message => console.log(message);
 thread.terminate();
 ```
 
+You can use this to get reference of thread created on pre-load or getting exisiting thread.
+
 ### Get all threads ID's
 
 ```
