@@ -2,6 +2,7 @@ package com.reactlibrary;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.facebook.react.ReactNativeHost;
@@ -33,7 +34,6 @@ public class RNThreadModule extends ReactContextBaseJavaModule implements Lifecy
 
   private String TAG = "ThreadManager";
   private HashMap<String, JSThread> threads;
-
   private ReactApplicationContext reactApplicationContext;
 
   private ReactNativeHost reactNativeHost;
@@ -55,7 +55,9 @@ public class RNThreadModule extends ReactContextBaseJavaModule implements Lifecy
   }
 
 @ReactMethod
-  public  void init () {
+  public  void getAllMessagesInThread (final Promise promise) {
+    HashMap messagesClass = JSMessages.getInstance().messages;
+    promise.resolve(messagesClass);
   }
 
   @ReactMethod

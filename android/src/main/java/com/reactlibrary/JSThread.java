@@ -3,8 +3,6 @@ package com.reactlibrary;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
-import java.util.Random;
-
 public class JSThread {
     private String id;
 
