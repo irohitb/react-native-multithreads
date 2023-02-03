@@ -27,7 +27,7 @@ and I recommend you investigate those thoroughly before using this library.
 ## Index
 
 - [Getting started](https://github.com/irohitb/react-native-multithreads#getting-started)
-- [APIs]()
+- [APIs](https://github.com/irohitb/react-native-multithreads#api)
 
 ## Getting Started
 
