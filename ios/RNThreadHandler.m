@@ -14,6 +14,7 @@
 
 @implementation RNThreadHandler {
     NSMutableDictionary *threadsMap;
+    int *messageCount;
 }
 
 
@@ -21,6 +22,8 @@
     if (self = [super init]) {
         //Initalizing Empty Participants
         threadsMap = [NSMutableDictionary new];
+        _messages = [NSMutableDictionary new];
+        messageCount = 0;
     }
     return self;
 }
@@ -79,7 +82,23 @@
             RCTBridge *thread = threadsMap[key];
             [thread invalidate];
         }
-        [threadsMap removeAllObjects];
+    [threadsMap removeAllObjects];
+    [_messages removeAllObjects];
+}
+
+- (void)addMessage:(NSString *_Nonnull)threadId message:(NSString *)message didParentBridgeExist:(BOOL)didParentBridgeExist {
+  
+    NSDictionary *data = @{
+       @"message": message,
+       @"threadId": threadId,
+       @"parentBridgeExisted": @(didParentBridgeExist)
+    };
+    [_messages setObject:data forKey:[NSNumber numberWithInt:messageCount]];
+    messageCount = messageCount + 1;
+}
+
+- (NSMutableDictionary*)getAllMessages {
+    return _messages;
 }
 
 @end

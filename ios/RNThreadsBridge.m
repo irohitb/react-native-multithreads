@@ -6,11 +6,13 @@
 //
 
 #import "RNThreadsBridge.h"
-
+#import "RNThreadMessageQueue.h"
+#import "RNThreadHandler.h"
 
 @implementation RNThreadsBridge {
   // These are probably suppose to private and hence we don't need to declare them in header file
   RCTBridge *_bridgeWrapper;
+
 }
 
 
@@ -37,7 +39,7 @@
 
 - (void)setReactBridge:(RCTBridge*)bridge  {
     _bridgeWrapper = bridge;
-}
+  }
 
 - (void) invalidateBridge {
     if (_bridgeWrapper) {

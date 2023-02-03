@@ -54,6 +54,10 @@ public class RNThreadModule extends ReactContextBaseJavaModule implements Lifecy
     return "ThreadManager";
   }
 
+@ReactMethod
+  public  void init () {
+  }
+
   @ReactMethod
   public  void getThreadsId (final Promise promise) {
     List<String> keys = new ArrayList<>(threads.keySet());

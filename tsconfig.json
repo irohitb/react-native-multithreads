@@ -7,7 +7,7 @@
     "jest.config.js"
   ],
   "compilerOptions": {
-    "lib": ["es5", "es6", "esnext.asynciterable"],
+    "lib": ["ES2017"],
     "allowSyntheticDefaultImports": false,
     "esModuleInterop": false,
     "jsx": "react",

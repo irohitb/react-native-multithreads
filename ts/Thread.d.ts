@@ -3,6 +3,11 @@ export interface ThreadInterface {
     postMessage(msg: string): void;
     terminate(): void;
 }
+export interface ThreadMessageInterface {
+    threadId: string;
+    message: string;
+    parentBridgeExisted: boolean;
+}
 export default class Thread implements ThreadInterface {
     path: string;
     threadId: string;
@@ -15,3 +20,5 @@ export default class Thread implements ThreadInterface {
     terminate(): void;
     postMessage(msg: string): void;
 }
+export declare const getThreadsId: () => Promise<String[]>;
+export declare const getAllMessagesInThread: () => Promise<ThreadMessageInterface[]>;

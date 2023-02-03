@@ -46,3 +46,11 @@ export default class Thread {
         }
     }
 }
+export const getThreadsId = async () => {
+    const threadIds = await ThreadManager.getThreadsId();
+    return Object.keys(threadIds);
+};
+export const getAllMessagesInThread = async () => {
+    const messages = await ThreadManager.getAllMessages();
+    return Object.values(messages);
+};

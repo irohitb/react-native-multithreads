@@ -6,6 +6,7 @@ Updated fork of [react-native-threads](https://github.com/joltup/react-native-th
 
 - Preloading thread on native side (in background thread for faster performance and early optimization)
 - New API to get reference of existing thread
+- Acess All Messages send by other threads
 - Typescript support
 
 ## Fixes
@@ -156,6 +157,26 @@ self.onMessage = message => {};
 
 // send a message, strings only
 self.postMessage('hello');
+```
+
+### `Get All Message in Threads`
+
+```
+import {
+getAllMessagesInThread,
+} from 'react-native-threads';
+
+getAllMessagesInThread
+```
+
+This would give all messages send from `self` thread. Interface for which would be
+
+```
+export interface ThreadMessageInterface {
+  threadId: string;
+  message: string;
+  parentBridgeExisted: boolean;
+}
 ```
 
 Check out the [example directory](https://github.com/irohitb/rn-pre-threading)

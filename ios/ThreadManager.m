@@ -12,15 +12,18 @@
 
 RCT_EXPORT_MODULE(ThreadManager);
 
+- (void) initalizeBridge {
+    RCTBridge* parentBridge =  [RNThreadsBridge sharedInstance].getReactBridge;
+    if (parentBridge == nil) {
+        [[RNThreadsBridge sharedInstance] setReactBridge:self.bridge];
+    }
+}
 RCT_EXPORT_METHOD(startThread: (NSString *)path
                   threadId: (NSString*)threadId
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    RCTBridge* parentBridge =  [RNThreadsBridge sharedInstance].getReactBridge;
-    if (parentBridge == nil) {
-        [[RNThreadsBridge sharedInstance] setReactBridge:self.bridge];
-    }
+    [self initalizeBridge];
     [[RNThreadHandler sharedInstance] startNewThread:path threadId:threadId];
     resolve(threadId);
 }
@@ -30,10 +33,7 @@ RCT_EXPORT_METHOD(getExistingThread:
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    RCTBridge* parentBridge =  [RNThreadsBridge sharedInstance].getReactBridge;
-    if (parentBridge == nil) {
-        [[RNThreadsBridge sharedInstance] setReactBridge:self.bridge];
-    }
+    [self initalizeBridge];
     if ([[RNThreadHandler sharedInstance] doesThreadWithIdExist:threadId] == true) {
         resolve(threadId);
     } else {
@@ -58,6 +58,12 @@ RCT_EXPORT_METHOD(getThreadsId:(RCTPromiseResolveBlock)resolve
 RCT_EXPORT_METHOD(postThreadMessage: (NSString*)threadId message:(NSString *)message)
 {
     [[RNThreadHandler sharedInstance] postThreadMessage:threadId message:message];
+}
+
+RCT_EXPORT_METHOD(getAllMessages:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSMutableDictionary* messages =[[RNThreadHandler sharedInstance] messages];
+    resolve(messages);
 }
 
 - (void)invalidate {

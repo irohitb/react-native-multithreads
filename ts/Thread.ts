@@ -9,6 +9,12 @@ export interface ThreadInterface {
   terminate(): void;
 }
 
+export interface ThreadMessageInterface {
+  threadId: string;
+  message: string;
+  parentBridgeExisted: boolean;
+}
+
 const {ThreadManager} = NativeModules;
 
 const threadEventEmitter = new NativeEventEmitter(ThreadManager);
@@ -68,3 +74,15 @@ export default class Thread implements ThreadInterface {
     }
   }
 }
+
+export const getThreadsId = async (): Promise<String[]> => {
+  const threadIds = await ThreadManager.getThreadsId();
+  return Object.keys(threadIds);
+};
+
+export const getAllMessagesInThread = async (): Promise<
+  ThreadMessageInterface[]
+> => {
+  const messages = await ThreadManager.getAllMessages();
+  return Object.values(messages);
+};
