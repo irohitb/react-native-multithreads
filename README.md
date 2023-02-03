@@ -159,7 +159,7 @@ self.onMessage = message => {};
 self.postMessage('hello');
 ```
 
-### `Get All Message in Threads`
+### Get All Message in Threads
 
 ```
 import {
