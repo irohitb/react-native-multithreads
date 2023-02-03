@@ -24,6 +24,11 @@ and I recommend you investigate those thoroughly before using this library.
 
 **Note:** This is an updated fork of [react-native-threads](https://github.com/joltup/react-native-threads)
 
+## Index
+
+- [Getting started](https://github.com/irohitb/react-native-multithreads#getting-started)
+- [APIs]()
+
 ## Getting Started
 
 ### iOS
@@ -86,9 +91,11 @@ module.exports = {
 
 ## Usage
 
-- [Example repo](https://github.com/irohitb/rn-pre-threading)
-- [background preload thread in iOS](https://github.com/irohitb/rn-pre-threading/commit/1838ae35c8a2b8796a12fcf42bcf96942de7d050)
+- [Example repo](https://github.com/irohitb/react-native-multithreads/tree/master/example)
+
 - [JS Code example](https://github.com/irohitb/rn-pre-threading/blob/master/App.tsx)
+
+## Api
 
 ### Preloading (iOS only)
 
@@ -97,25 +104,29 @@ module.exports = {
   [[RNThreadHandler sharedInstance] startNewThread:@"./worker.thread" threadId:@"test2"];
 ```
 
+**Example**: [Click Here](https://github.com/irohitb/react-native-multithreads/blob/master/example/ios/App/AppDelegate.mm#L35)
+
 ### Threads Api
 
 In your application code (react components, etc.):
 
 ```javascript
-import {Thread} from 'react-native-threads';
+import { Thread } from "react-native-threads";
 
 // start a new react native JS process
-new Thread('./second.thread.js', 'test1');
+new Thread("./second.thread.js", "test1");
 
 // send a message, strings only
-thread.postMessage('hello');
+thread.postMessage("hello");
 
 // listen for messages
-thread.onMessage = message => console.log(message);
+thread.onMessage = (message) => console.log(message);
 
 // stop the JS process
 thread.terminate();
 ```
+
+Example: [Click Here](https://github.com/irohitb/react-native-multithreads/blob/master/example/App.tsx#L43)
 
 ## Working with Existing thread passed from native side..
 
@@ -136,6 +147,10 @@ thread.terminate();
 
 You can use this to get reference of thread created on pre-load or getting exisiting thread.
 
+Example: [Click here](https://github.com/irohitb/react-native-multithreads/blob/master/example/App.tsx#L45)
+
+Note: In the example code you can see try-catch, in hot-reload, preloaded thread gets invalidated. Since Pre-loaded thread isn't initalized on the JS side, it doesn't start again. Here we are passing `onError` which initalised pre-loaded thread from JS thread. This is only for Development
+
 ### Get all threads ID's
 
 ```
@@ -150,13 +165,13 @@ const ids = getThreadsId();
 In your thread code (dedicated file such as `thread.js`):
 
 ```javascript
-import {self} from 'react-native-threads';
+import { self } from "react-native-threads";
 
 // listen for messages
-self.onMessage = message => {};
+self.onMessage = (message) => {};
 
 // send a message, strings only
-self.postMessage('hello');
+self.postMessage("hello");
 ```
 
 ### Get All Message in Threads
@@ -179,7 +194,9 @@ export interface ThreadMessageInterface {
 }
 ```
 
-Check out the [example directory](https://github.com/irohitb/rn-pre-threading)
+This is superuseful to keep track of messages sent from which thread, specially the ones which could have been sent before the bridge was initalized
+
+**Example**:[click here](https://github.com/irohitb/react-native-multithreads/blob/master/example/App.tsx#L22)
 
 ### Thread Lifecycle
 
