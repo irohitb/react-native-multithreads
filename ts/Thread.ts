@@ -2,6 +2,7 @@ import {
   NativeModules,
   NativeEventEmitter,
   EmitterSubscription,
+  Platform,
 } from 'react-native';
 
 export interface ThreadInterface {
@@ -84,5 +85,8 @@ export const getAllMessagesInThread = async (): Promise<
   ThreadMessageInterface[]
 > => {
   const messages = await ThreadManager.getAllMessages();
+  if (Platform.OS === 'android') {
+    return Object.values(JSON.parse(messages));
+  }
   return Object.values(messages);
 };

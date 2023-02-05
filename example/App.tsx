@@ -15,14 +15,12 @@ const App = () => {
   const workerThread1 = React.useRef<Thread | null>(null);
   const workerThread2 = React.useRef<ExistingThread | Thread | null>(null);
   const handleMessage = (msg: string) => {
-    console.log('Handle Message');
     setMessages(prevMsg => [...prevMsg, msg]);
     loadMisThreadData();
   };
 
   const loadMisThreadData = async () => {
     const messages = await getAllMessagesInThread();
-    console.log('messages:', messages);
     const earlyMessages = messages
       .filter(el => !el.parentBridgeExisted)
       .map(el => el.message);

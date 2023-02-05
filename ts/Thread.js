@@ -1,4 +1,4 @@
-import { NativeModules, NativeEventEmitter, } from 'react-native';
+import { NativeModules, NativeEventEmitter, Platform, } from 'react-native';
 const { ThreadManager } = NativeModules;
 const threadEventEmitter = new NativeEventEmitter(ThreadManager);
 export default class Thread {
@@ -52,5 +52,8 @@ export const getThreadsId = async () => {
 };
 export const getAllMessagesInThread = async () => {
     const messages = await ThreadManager.getAllMessages();
+    if (Platform.OS === 'android') {
+        return Object.values(JSON.parse(messages));
+    }
     return Object.values(messages);
 };
