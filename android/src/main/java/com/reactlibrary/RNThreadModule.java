@@ -119,6 +119,16 @@ public class RNThreadModule extends ReactContextBaseJavaModule implements Lifecy
       }
     });
   }
+  // Required for rn built in EventEmitter Calls.
+@ReactMethod
+public void addListener(String eventName) {
+
+}
+
+@ReactMethod
+public void removeListeners(Integer count) {
+
+}
 
   @ReactMethod
   public void getExistingThread(final String threadId, final Promise promise) {

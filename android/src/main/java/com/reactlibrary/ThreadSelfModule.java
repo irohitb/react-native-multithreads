@@ -38,4 +38,15 @@ public class ThreadSelfModule extends ReactContextBaseJavaModule {
         parentContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("Thread" + String.valueOf(threadId), data);
     }
+
+    // Required for rn built in EventEmitter Calls.
+    @ReactMethod
+    public void addListener(String eventName) {
+
+    }
+
+    @ReactMethod
+    public void removeListeners(Integer count) {
+
+    }
 }
