@@ -6,17 +6,17 @@ public class JSMessages {
     private static JSMessages jsMessagesInstance;
 
     private Integer count;
-    public HashMap<Integer, JSMessage> messages;
+    public HashMap<String, JSMessage> messages;
 
     public void addMessages (String id, String message, boolean parentBridgeExisted) {
         JSMessage jsMessage = new JSMessage(id, message, parentBridgeExisted);
-        messages.put(count, jsMessage);
+        messages.put(String.valueOf(count), jsMessage);
         count = count + 1;
     }
 
     public void resetMessage () {
-        messages = new HashMap<Integer, JSMessage>();
-        count = 0;
+        messages = new HashMap<String, JSMessage>();
+        count = 1;
     }
 
     public static JSMessages getInstance() {
@@ -27,7 +27,7 @@ public class JSMessages {
         return jsMessagesInstance;
     }
     private JSMessages () {
-        messages = new HashMap<Integer, JSMessage>();
-        count = 0;
+        messages = new HashMap<String, JSMessage>();
+        count = 1;
     }
 }

@@ -2,9 +2,8 @@ package com.reactlibrary;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
-
+import com.google.gson.Gson;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -15,6 +14,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.devsupport.interfaces.DevSupportManager;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -54,16 +54,19 @@ public class RNThreadModule extends ReactContextBaseJavaModule implements Lifecy
     return "ThreadManager";
   }
 
-@ReactMethod
-  public  void getAllMessagesInThread (final Promise promise) {
-    HashMap messagesClass = JSMessages.getInstance().messages;
-    promise.resolve(messagesClass);
-  }
-
   @ReactMethod
   public  void getThreadsId (final Promise promise) {
     List<String> keys = new ArrayList<>(threads.keySet());
     promise.resolve(keys);
+  }
+
+  @ReactMethod
+  public  void getAllMessages (final Promise promise) {
+    Log.d(TAG, "Getting messages");
+    HashMap messagesClass = JSMessages.getInstance().messages;
+    Gson gson = new Gson();
+    String json = gson.toJson(messagesClass);
+    promise.resolve(json);
   }
 
   @ReactMethod
@@ -102,6 +105,7 @@ public class RNThreadModule extends ReactContextBaseJavaModule implements Lifecy
       getDevSupportManager().handleException(e);
     }
   }
+
 
   @ReactMethod
   public void stopThread(final String threadId) {
