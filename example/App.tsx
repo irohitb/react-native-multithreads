@@ -41,11 +41,12 @@ const App = () => {
   }
   useEffect(() => {
     workerThread1.current = new Thread('./second.thread.js', 'test1');
-    try {
-      workerThread2.current = new ExistingThread('test2', onError);
-    } catch (e) {
-      workerThread2.current = new Thread('./worker.thread.js', 'test2');
-    }
+    // We have error handler on Existing thread because,
+    // Since Exisiting thread could be initalized on the native side.
+    // When hot-reloading happens, it invalidates all the threads and re-creates new thread
+    // In this case, the exisisting thread from the native side won't exist
+    // Hence it would throw an error, on error handler creates that new thread
+    workerThread2.current = new ExistingThread('test2', onError);
     loadMisThreadData();
     workerThread1.current.onMessage = handleMessage;
     workerThread2.current.onMessage = handleMessage;

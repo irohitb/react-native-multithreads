@@ -149,7 +149,11 @@ You can use this to get reference of thread created on pre-load or getting exisi
 
 Example: [Click here](https://github.com/irohitb/react-native-multithreads/blob/master/example/App.tsx#L45)
 
-Note: In the example code you can see try-catch, in hot-reload, preloaded thread gets invalidated. Since Pre-loaded thread isn't initalized on the JS side, it doesn't start again. Here we are passing `onError` which initalised pre-loaded thread from JS thread. This is only for Development
+We have error handler on Existing thread because,
+Since Exisiting thread could be initalized on the native side.
+When hot-reloading happens, it invalidates all the threads and re-creates new thread
+In this case, the exisisting thread from the native side won't exist and won't be created it as well.
+Hence it would throw an error, on error handler, we catch that error and create that new thread (ideally made from native side)
 
 ### Get all threads ID's
 
