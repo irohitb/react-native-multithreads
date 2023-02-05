@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "fix-threads": "yarn patch-package react-native-threads",
-    "build-threads": "tsc --p ./node_modules/react-native-threads/tsconfig.json",
+    "build-threads": "tsc --p ./node_modules/react-native-threads/tsconfig.json && ./build-lib.sh",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
