@@ -1,10 +1,11 @@
 # react-native-threads
 
+
 ## Update
 
 Updated fork of [react-native-threads](https://github.com/joltup/react-native-threads) which adds new api's like
 
-- Preloading thread on native side (in background thread for faster performance and early optimization)
+- Preloading thread on native side (in background thread for faster performance and early optimization - [more here](https://twitter.com/Ibhatiarohit/status/1621027227046649856?s=20&t=V_6qb3MvYVBIkzA9SMfJFg)) 
 - New API to get reference of existing thread
 - Acess All Messages send by other threads
 - Typescript support
