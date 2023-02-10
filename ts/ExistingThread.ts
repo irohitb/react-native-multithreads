@@ -2,44 +2,54 @@ import {
   NativeModules,
   NativeEventEmitter,
   EmitterSubscription,
-} from 'react-native';
+} from "react-native";
 
 export interface ThreadInterface {
   postMessage(msg: string): void;
   terminate(): void;
 }
 
-const {ThreadManager} = NativeModules;
+// @ts-expect-error
+const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
-const threadEventEmitter = new NativeEventEmitter(ThreadManager);
+const { ThreadManager } = NativeModules;
+
+const SelfModule = isTurboModuleEnabled
+  ? require("./NativeSelf").default
+  : ThreadManager;
+
+const ThreadEvents = new NativeEventEmitter(SelfModule);
 
 export default class ExistingThread implements ThreadInterface {
   threadId: string;
   id?: Promise<any>;
   threadListener?: EmitterSubscription;
   onMessage?(msg: string): void;
-  onError: () => void
+  onError: () => void;
   constructor(threadId: string, onError: () => void) {
     this.threadId = threadId;
     this.getExistingThread();
-    this.onError = onError
+    this.onError = onError;
   }
 
   public getExistingThread() {
-    this.id = ThreadManager.getExistingThread(this.threadId).then((id: string) => {
-
-      this.threadListener = threadEventEmitter.addListener(
-        `Thread${id}`,
-        (message: string) => {
-          if (this.onMessage) {
-            this.onMessage(message);
+    this.id = ThreadManager.getExistingThread(this.threadId)
+      .then((id: string) => {
+        this.threadListener = ThreadEvents.addListener(
+          `Thread${id}`,
+          (message: string) => {
+            if (this.onMessage) {
+              this.onMessage(message);
+            }
           }
-        },
-      );
-      return id;
-    }).catch((e:string) => {{
-      this.onError()
-    }})
+        );
+        return id;
+      })
+      .catch((e: string) => {
+        {
+          this.onError();
+        }
+      });
   }
 
   public terminate(): void {
@@ -51,7 +61,7 @@ export default class ExistingThread implements ThreadInterface {
 
   postMessage(msg: string): void {
     if (this.id) {
-      this.id.then(id => {
+      this.id.then((id) => {
         ThreadManager.postThreadMessage(id, msg);
       });
     }

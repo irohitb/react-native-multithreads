@@ -3,7 +3,18 @@ import {
   NativeEventEmitter,
   EmitterSubscription,
   Platform,
-} from 'react-native';
+} from "react-native";
+
+// @ts-expect-error
+const isTurboModuleEnabled = global.__turboModuleProxy != null;
+
+const { ThreadManager } = NativeModules;
+
+const ThreadModule = isTurboModuleEnabled
+  ? require("./NativeThread").default
+  : ThreadManager;
+
+const ThreadEvents = new NativeEventEmitter(ThreadModule);
 
 export interface ThreadInterface {
   postMessage(msg: string): void;
@@ -16,10 +27,6 @@ export interface ThreadMessageInterface {
   parentBridgeExisted: boolean;
 }
 
-const {ThreadManager} = NativeModules;
-
-const threadEventEmitter = new NativeEventEmitter(ThreadManager);
-
 export default class Thread implements ThreadInterface {
   path: string;
   threadId: string;
@@ -28,8 +35,8 @@ export default class Thread implements ThreadInterface {
   onMessage?(msg: string): void;
   errorHandler?: (msg: string) => void;
   constructor(jsPath: string, threadId: string) {
-    if (!jsPath.endsWith('.js')) {
-      throw new Error('Invalid path for thread. Only js files are supported');
+    if (!jsPath.endsWith(".js")) {
+      throw new Error("Invalid path for thread. Only js files are supported");
     }
     this.path = jsPath;
     this.threadId = threadId;
@@ -37,19 +44,18 @@ export default class Thread implements ThreadInterface {
   }
 
   private startThread() {
-    console.log('Thread Manager:', NativeModules);
     this.id = ThreadManager.startThread(
-      this.path.replace('.js', ''),
-      this.threadId,
+      this.path.replace(".js", ""),
+      this.threadId
     )
       .then((id: string) => {
-        this.threadListener = threadEventEmitter.addListener(
+        this.threadListener = ThreadEvents.addListener(
           `Thread${id}`,
           (message: string) => {
             if (this.onMessage) {
               this.onMessage(message);
             }
-          },
+          }
         );
         return id;
       })
@@ -69,7 +75,7 @@ export default class Thread implements ThreadInterface {
 
   postMessage(msg: string): void {
     if (this.id) {
-      this.id.then(id => {
+      this.id.then((id) => {
         ThreadManager.postThreadMessage(id, msg);
       });
     }
@@ -85,7 +91,7 @@ export const getAllMessagesInThread = async (): Promise<
   ThreadMessageInterface[]
 > => {
   const messages = await ThreadManager.getAllMessages();
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     return Object.values(JSON.parse(messages));
   }
   return Object.values(messages);
