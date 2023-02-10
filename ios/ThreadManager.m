@@ -1,6 +1,9 @@
 #import "ThreadManager.h"
 #import "RNThreadHandler.h"
 #import "RNThreadsBridge.h"
+#ifdef RCT_NEW_ARCH_ENABLED
+#import "RNThreadSpec.h"
+#endif
 #include <stdlib.h>
 
 @implementation ThreadManager {
@@ -65,6 +68,14 @@ RCT_EXPORT_METHOD(getAllMessages:(RCTPromiseResolveBlock)resolve
     NSMutableDictionary* messages =[[RNThreadHandler sharedInstance] messages];
     resolve(messages);
 }
+
+#ifdef RCT_NEW_ARCH_ENABLED
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
+    (const facebook::react::ObjCTurboModule::InitParams &)params
+{
+    return std::make_shared<facebook::react::NativeCalculatorSpecJSI>(params);
+}
+#endif
 
 - (void)invalidate {
     [[RNThreadHandler sharedInstance] invalidateAllThread];
